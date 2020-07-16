@@ -1,0 +1,76 @@
+    	//부트스트랩 충돌방지 lite 버전사용
+      
+      <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+			<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-ko-KR.min.js"></script>
+      
+      <div>
+			<form method="post">
+			  <!-- <textarea id="summernote" name="editordata"></textarea> -->
+					  <div class="form-group">
+						<label for="board_content">내용</label>
+						<textarea name="BOARD_CONTENT" id="board_content"></textarea> 
+					</div>
+			</form>
+		</div>
+    
+    
+    <script>
+    	//문서시작
+		$(document).ready(function() {
+			  $('#board_content').summernote();
+			});
+		
+			//속성변경
+		   $('#board_content').summernote({
+			    placeholder: '최대 500자 작성 가능합니다.',
+		        tabsize: 2,
+		        lang: 'ko-KR',
+		        height: 500,
+		        toolbar: [
+		          ['Font Style', ['fontname']],		
+		          ['style', ['style']],
+		          ['font', ['bold', 'underline', 'clear']],
+		          ['color', ['color']],
+		          ['para', ['ul', 'ol', 'paragraph']],
+		          ['table', ['table']],
+		          ['insert', ['link', 'picture', 'video']],
+		          ['view', ['fullscreen', 'codeview', 'help']]
+		        ]
+		      });
+
+		$(function() {
+				$('#board_content').summernote({
+				        callbacks: {
+				        	onImageUpload: function(files) {
+				        		
+				        			sendFile(files[0]);
+				        		
+				        	}
+				        }
+				 });
+		});
+		   
+		   function sendFile(file, editor) {
+				var form_data = new FormData();
+				form_data.append('file', file);
+				$.ajax({
+					data: form_data,
+					type : "post",
+					url: '/customer/image',
+					cashe : false,
+					contentType : false,
+					enctype : 'multipart/form-data',
+					processData : false,
+					success : function(img_name) {
+					
+						console.log(img_name + "zzzzzzzzzzzzzzzzzz");
+						$(editor).summernote('editor.insertImage', img_name.url);
+						/* $(el).summernote('insertImage', img_name.url); */
+						 $('#board_content > ul').append('<li><img src="'+img_name.url+'" width="480" height="auto"/></li>');
+			
+
+					}
+				});
+			}
+		</script>

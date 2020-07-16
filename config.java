@@ -22,3 +22,22 @@ public class WebConfig implements WebMvcConfigurer {
     }
 }
 
+
+     //pom.xml
+
+       <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+        
+    // application.properties
+        
+        #spring json 기본 컨버터가 jackson 이므로 gson 으로 컨버터시 오류가 발생해서 기본을 gson으로 변경
+       spring.mvc.converters.preferred-json-mapper=gson
+
+         # 이건 부트 2.3.0 릴리즈 미만일때 spring.http.converters.preferred-json-mapper=gson

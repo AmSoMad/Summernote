@@ -1,3 +1,11 @@
+import java.util.UUID;
+import org.apache.commons.io.FileUtils;
+import com.google.gson.JsonObject;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import java.io.File;
+import java.io.InputStream;
 
     //파일 업로드
     @PostMapping(value="/image", produces = "application/json")
